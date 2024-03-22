@@ -1,13 +1,22 @@
 import { APIGatewayProxyEventV2 } from "aws-lambda";
 import * as jose from "node-jose";
 
-export const getResultBase = (statusCode: number = 200) => {
+export const getResultBase = (
+  origin: string,
+  allowOrigins: string[],
+  statusCode: number = 200
+) => {
+  const allowOrigin = allowOrigins.includes("*")
+    ? "*"
+    : allowOrigins.includes(origin)
+    ? origin
+    : "";
   const result = {
     statusCode,
     body: JSON.stringify(true),
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": allowOrigin,
       "Access-Control-Allow-Methods": "*",
       "Access-Control-Allow-Headers": "*",
       "Access-Control-Expose-Headers": "*",

@@ -6,6 +6,7 @@ import { VpcWrapper } from "./VpcWrapper";
 import { WrapperBase, WrapperBaseProps } from "./WrapperBase";
 
 interface Props extends WrapperBaseProps {
+  allowOrigins: string[];
   vpcWrapper: VpcWrapper;
   secretWrapper: SecretWrapper;
 }
@@ -15,6 +16,7 @@ export class LambdaWrapper extends WrapperBase {
     messagesGet: lambdaNodeJs.NodejsFunction;
     messagesPost: lambdaNodeJs.NodejsFunction;
   };
+  private allowOrigins: string[];
   private vpcWrapper: VpcWrapper;
   private secretWrapper: SecretWrapper;
 
@@ -25,11 +27,13 @@ export class LambdaWrapper extends WrapperBase {
 
   private readonly initialize = (props: Props): void => {
     this.setAdditionalValues(props);
+    this.createLambdas();
   };
 
   private readonly setAdditionalValues = (props: Props): void => {
-    const { vpcWrapper, secretWrapper } = props;
+    const { allowOrigins, vpcWrapper, secretWrapper } = props;
 
+    this.allowOrigins = allowOrigins;
     this.vpcWrapper = vpcWrapper;
     this.secretWrapper = secretWrapper;
   };
@@ -41,6 +45,7 @@ export class LambdaWrapper extends WrapperBase {
       true,
       {
         DB_SECRET_ID: this.secretWrapper.readerSecret.secretArn,
+        ALLOW_ORIGINS: this.allowOrigins.join(","),
       }
     );
     this.secretWrapper.readerSecret.grantRead(messagesGet);
@@ -50,6 +55,7 @@ export class LambdaWrapper extends WrapperBase {
       true,
       {
         DB_SECRET_ID: this.secretWrapper.writerSecret.secretArn,
+        ALLOW_ORIGINS: this.allowOrigins.join(","),
       }
     );
     this.secretWrapper.writerSecret.grantRead(messagesGet);

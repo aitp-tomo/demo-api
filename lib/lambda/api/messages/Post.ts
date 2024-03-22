@@ -15,6 +15,7 @@ import {
 import { MysqlWrapper } from "../common/mysqlWrapper";
 
 const DB_SECRET_ID = process.env.DB_SECRET_ID!;
+const ALLOW_ORIGINS = process.env.ALLOW_ORIGINS!.split(",");
 
 const validate = (event: APIGatewayProxyEventV2, userId: string): string => {
   if (!userId) {
@@ -41,7 +42,7 @@ const validate = (event: APIGatewayProxyEventV2, userId: string): string => {
 export const handler: APIGatewayProxyHandlerV2 = async (
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> => {
-  const result = getResultBase();
+  const result = getResultBase(event.headers.origin!, ALLOW_ORIGINS, 201);
   let userId: string | undefined;
   try {
     userId = getUserInfo(event, "sub");

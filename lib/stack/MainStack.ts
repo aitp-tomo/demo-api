@@ -107,6 +107,7 @@ export class MainStack extends StackBase {
       ...commonProps,
       vpcWrapper,
       secretWrapper,
+      allowOrigins: this.allowOrigins,
     });
     const authorizerWrapper = new AuthorizerWrapper({
       ...commonProps,
