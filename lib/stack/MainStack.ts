@@ -122,6 +122,7 @@ export class MainStack extends StackBase {
     new BastionWrapper({
       ...commonProps,
       vpcWrapper,
+      s3LoggingBucketName: this.s3LoggingBucketName,
     });
     const snsWrapper = new SnsWrapper({
       ...commonProps,
