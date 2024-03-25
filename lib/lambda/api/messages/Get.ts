@@ -11,7 +11,7 @@ import {
   HTTP404Error,
   HTTP401Error,
 } from "../common/error";
-import { MysqlWrapper } from "../common/mysqlWrapper";
+import { MysqlWrapper } from "../common/MysqlWrapper";
 
 const DB_SECRET_ID = process.env.DB_SECRET_ID!;
 const ALLOW_ORIGINS = process.env.ALLOW_ORIGINS!.split(",");
