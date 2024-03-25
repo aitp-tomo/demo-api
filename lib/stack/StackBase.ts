@@ -23,4 +23,8 @@ export class StackBase extends cdk.Stack {
     this.envName = envName;
     this.appId = `${this.appName}-${this.envName}`;
   };
+
+  get availabilityZones(): string[] {
+    return ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"];
+  }
 }
