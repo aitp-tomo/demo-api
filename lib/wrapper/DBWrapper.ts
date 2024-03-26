@@ -53,7 +53,10 @@ export class DBWrapper extends WrapperBase {
     const readers: rds.IClusterInstance[] = [];
     for (let index = 0; index < this.readerNum; index++) {
       const id = `reader${(index + 1).toString().padStart(2, "0")}`;
-      const reader = rds.ClusterInstance.serverlessV2(id, instanceProps);
+      const reader = rds.ClusterInstance.serverlessV2(id, {
+        ...instanceProps,
+        scaleWithWriter: true,
+      });
       readers.push(reader);
     }
     this.cluster = new rds.DatabaseCluster(this.scope, this.clusterId, {
