@@ -1,5 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import * as lambdaNodeJs from "aws-cdk-lib/aws-lambda-nodejs";
+import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as path from "path";
 import { SecretWrapper } from "./SecretWrapper";
 import { VpcWrapper } from "./VpcWrapper";
@@ -96,6 +97,7 @@ export class LambdaWrapper extends WrapperBase {
         vpc,
         vpcSubnets,
         securityGroups,
+        runtime: lambda.Runtime.NODEJS_20_X,
       }
     );
     return lambdaFunction;
