@@ -59,7 +59,7 @@ export class LambdaWrapper extends WrapperBase {
         ALLOW_ORIGINS: this.allowOrigins.join(","),
       }
     );
-    this.secretWrapper.writerSecret.grantRead(messagesGet);
+    this.secretWrapper.writerSecret.grantRead(messagesPost);
 
     this.lambdas = {
       messagesGet,
