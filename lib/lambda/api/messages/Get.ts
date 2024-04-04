@@ -25,7 +25,7 @@ const validate = (
   }
   let id: number | undefined;
   if (event.queryStringParameters && event.queryStringParameters["id"]) {
-    id = Number(event.queryStringParameters["siteId"]);
+    id = Number(event.queryStringParameters["id"]);
     if (!Number.isInteger(id) || id <= 0) {
       throw new HTTP404Error("IDの指定が不正です");
     }
