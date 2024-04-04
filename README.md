@@ -45,13 +45,38 @@ https://agaroot-itp.com/blog/2118/
 
 本ソースのトップディレクトリで、下記コマンドを実行します。
 
-```bash
+```
 $ npm install
 $ cdk bootstrap
 $ cdk deploy
 ```
 
+## DB 準備
+
+1. 踏み台インスタンスが`{アプリ名}-{環境名}-bastion`という名前で作成されているので、Session Manager により接続します。
+1. DB のユーザーの認証情報が Secrets Manager のシークレット`{アプリ名}-{環境名}-db-{ユーザー名}-secret`に保存されています。シークレットの情報を参照して、下記コマンドを実行してください(mysql コマンドは自動でインストールされています)。
+
+```
+$ mysql -h {DBホスト名} -u admin -p {DBスキーマ名}
+# CREATE TABLE messages (
+    ID BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT comment 'ID',
+    content VARCHAR(1000) NOT NULL comment '内容',
+    user_id VARCHAR(80) NOT NULL comment 'ユーザーID',
+    created_at DATETIME comment '登録日時' DEFAULT current_timestamp NOT NULL,
+    updated_at DATETIME comment '更新日時' DEFAULT current_timestamp ON UPDATE current_timestamp NOT NULL
+);
+# CREATE USER 'developer'@'%' IDENTIFIED BY '{developerのpassword}';
+# GRANT ALL ON {DBスキーマ名}.* TO 'developer'@'%';
+# REATE USER 'writer'@'%' IDENTIFIED BY '{writerのpassword}';
+# GRANT SELECT, INSERT, UPDATE, DELETE ON {DBスキーマ名}.* TO 'writer'@'%';
+# CREATE USER 'reader'@'%' IDENTIFIED BY '{readerのpassword}';
+# GRANT SELECT ON {DBスキーマ名}.* TO 'reader'@'%';
+```
+
 # 構築後の改修方法
 
 システムの構築が終わった後は、ブランチに PR などによって改修ソースを反映すればリリース処理が行えます。
+
 CodePipeline で CI/CD パイプラインが作成されているので、以前のバージョンも含めたリリースの実行や実行中のリリース処理の中断なども行えます。
+
+踏み台インスタンス経由で DB の変更や保守作業などを行う場合には、developer ユーザーを用いて作業して下さい。
