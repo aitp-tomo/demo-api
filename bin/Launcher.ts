@@ -27,7 +27,7 @@ new CdkPipelineStack(app, `${appId}-stack`, {
   alarmActionsEnabled: process.env.ALARM_ACTIONS_ENABLED === "TRUE",
   env: {
     account: process.env.CDK_DEPLOY_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
-    region: process.env.CDK_DEPLOY_REGION || process.env.CDK_DEFAULT_REGION,
+    region: "ap-northeast-1",
   },
   terminationProtection: true,
 });
