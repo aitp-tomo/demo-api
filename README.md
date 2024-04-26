@@ -7,7 +7,7 @@ https://agaroot-itp.com/blog/2118/
 # 各バージョン
 
 - node: v20.11.1
-- Typescript: v20.11.1
+- Typescript: Version 3.7.5
 - cdk: 2.133.0
 
 # 構築手順
