@@ -8,7 +8,7 @@ https://agaroot-itp.com/blog/2118/
 
 - node: v20.11.1
 - Typescript: v20.11.1
-- cdk: 2.133.0 (build dcc1e75)
+- cdk: 2.133.0
 
 # 構築手順
 
@@ -19,11 +19,11 @@ https://agaroot-itp.com/blog/2118/
 
 ## GitHub と AWS の接続
 
-1. [GitHub リポジトリと AWS との接続を作成](https://docs.aws.amazon.com/ja_jp/codepipeline/latest/userguide/connections-github.html)します。
+[GitHub リポジトリと AWS との接続を作成](https://docs.aws.amazon.com/ja_jp/codepipeline/latest/userguide/connections-github.html)します。
 
 ## 環境変数の記述
 
-1. [.env](./.env)ファイルに環境変数を以下の通りに記述し、システム構築に用いるブランチにプッシュします。
+[.env](./.env)ファイルに環境変数を以下の通りに記述し、システム構築に用いるブランチにプッシュします。
 
 - `APP_NAME`: アプリ名
 - `ENV_NAME`: 環境名 e.g. dev, prod...
@@ -74,8 +74,6 @@ $ mysql -h {DBホスト名} -u admin -p {DBスキーマ名}
 
 # 構築後の改修方法
 
-システムの構築が終わった後は、ブランチに PR などによって改修ソースを反映すればリリース処理が行えます。
-
-CodePipeline で CI/CD パイプラインが作成されているので、以前のバージョンも含めたリリースの実行や実行中のリリース処理の中断なども行えます。
+CodePipeline で GitHub リポジトリと接続された CI/CD パイプラインが作成されています。なので以前のバージョンも含めたリリースの実行や実行中のリリース処理の中断なども行えます。
 
 踏み台インスタンス経由で DB の変更や保守作業などを行う場合には、developer ユーザーを用いて作業して下さい。
