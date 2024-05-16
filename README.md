@@ -46,7 +46,8 @@ https://agaroot-itp.com/blog/2118/
 
 ```
 $ npm install
-$ cdk bootstrap
+$ cdk synth
+$ cdk bootstrap # 必要であれば https://docs.aws.amazon.com/ja_jp/cdk/v2/guide/bootstrapping.html
 $ cdk deploy
 ```
 
